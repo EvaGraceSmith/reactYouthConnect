@@ -1,3 +1,10 @@
+import React, { useContext, useState } from 'react';
+
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { TextField } from '@mui/material';
+
+
 import {
     Box,
     FormControl,
@@ -10,7 +17,7 @@ import {
   
   import { ThemeContext, UserContext } from '../App';
   
-  import React, { useContext, useState } from 'react';
+
   
   import base64 from 'base-64';
   import ThemedBackground from '../components/ThemedBackground';
@@ -47,7 +54,13 @@ import {
   
     return (
       <ThemedBackground>
-        <Center w='100%'>
+        <Box 
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        width='100%' 
+        >
           <Box
             safeArea
             p='2'
@@ -66,26 +79,24 @@ import {
                 : 'Sign in to continue!'}
             </Heading>
   
-            <VStack
-              space={3}
-              mt='5'
+            <Box display="flex" flexDirection="column"
             >
-              <FormControl>
-                <FormControl.Label>Username</FormControl.Label>
+              <form>
+                <TextField>Username</TextField>
                 <Input
                   style={themeInputStyle}
                   onChangeText={setUsername}
                 />
-              </FormControl>
-              <FormControl>
-                <FormControl.Label>Password</FormControl.Label>
+              </form>
+              <form>
+                <TextField
+                style={themeInputStyle}
+                type='password'
+                onChangeText={setPassword}
+                >Password</TextField>
   
-                <Input
-                  style={themeInputStyle}
-                  type='password'
-                  onChangeText={setPassword}
-                />
-              </FormControl>
+
+              </form>
               <Button
                 mt='2'
                 style={[themeButtonStyle]}
@@ -94,9 +105,9 @@ import {
               >
                 Sign in
               </Button>
-            </VStack>
+            </Box>
           </Box>
-        </Center>
+        </Box>
       </ThemedBackground>
     );
   }
