@@ -1,11 +1,19 @@
-import React, { useEffect, useContext } from 'react';
-import { ScrollView, VStack, Button } from 'native-base'; // Adjust imports for web
-import ThemedText from '../components/ThemedText';
-import ThemedBox from '../components/ThemedBox';
-import ThemedBackground from '../components/ThemedBackground';
+import { useEffect, useContext } from 'react';
+import {
+  Box,
+  ScrollView,
+  Button,
+  Typography,
+  Container,
+  Card,
+  CardContent,
+} from '@mui/material';
 import { ThemeContext, UserContext } from '../App';
 import socket from '../utils/socket';
 import CreateRoomModal from '../components/CreateRoomModal';
+import ThemedText from '../components/ThemedText';
+import ThemedBox from '../components/ThemedBox';
+import ThemedBackground from '../components/ThemedBackground';
 
 export default function RoomList({ history }) {
   const { themeButtonStyle, themeContainerStyle, themeTextStyle } =
@@ -15,60 +23,64 @@ export default function RoomList({ history }) {
   useEffect(() => {
     if (room !== 'none') {
       console.log('ROOM CHANGED', room);
-      history.push(room); // Use history.push for navigation in web
+      history.push(`/${room}`);
     }
-  }, [room]);
+  }, [room, history]);
 
   return (
     <ThemedBox container={true}>
       <ThemedBackground>
         {user?.username ? (
-          <>
+          <Container>
             <ThemedText
               mt={10}
               marginLeft={5}
               style={themeTextStyle}
-              fontSize={'lg'}
-              text='Join a room:'
-            />
+              variant="h5"
+              component="div"
+            >
+              Join a room:
+            </ThemedText>
             <CreateRoomModal />
-            <ScrollView maxH={500}>
-              <VStack mt={5} space={4} alignItems='center'>
+            <ScrollView>
+              <Box mt={5} display="flex" flexDirection="column" alignItems="center">
                 {rooms?.length > 0 &&
                   rooms.map((room, i) => (
                     <Button
                       key={i}
-                      bg='transparent'
-                      style={[themeButtonStyle]}
+                      variant="outlined"
+                      style={themeButtonStyle}
                       onClick={() => {
                         socket.emit('join', { room: room.name });
                         setRoom(room.name);
                       }}
                     >
-                      <VStack
-                        w='64'
-                        h='20'
-                        style={themeContainerStyle}
-                        rounded='md'
-                        shadow={3}
-                        justifyContent='center' // Add this for web styling
-                        alignItems='center' // Add this for web styling
-                      >
-                        {room.name}
-                      </VStack>
+                      <Card style={{ width: '20rem' }}>
+                        <CardContent>
+                          <Typography
+                            variant="h6"
+                            component="div"
+                            style={themeContainerStyle}
+                          >
+                            {room.name}
+                          </Typography>
+                        </CardContent>
+                      </Card>
                     </Button>
                   ))}
-              </VStack>
+              </Box>
             </ScrollView>
-          </>
+          </Container>
         ) : (
           <ThemedText
             mt={0}
-            textAlign='center'
-            fontSize={'lg'}
+            textAlign="center"
+            variant="h5"
+            component="div"
             style={themeTextStyle}
-            text='Please Log in first'
-          />
+          >
+            Please Log in first
+          </ThemedText>
         )}
       </ThemedBackground>
     </ThemedBox>
