@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, TouchableOpacity, StatusBar } from "react-native"; // Adjust imports for web
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Link,
+  CssBaseline,
+  Grid,
+  Paper,
+} from '@mui/material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase';
+
 const backImage = require("../assets/backImage.png");
 
 export default function Signup({ history }) {
@@ -11,101 +21,70 @@ export default function Signup({ history }) {
   const onHandleSignup = () => {
     if (email !== '' && password !== '') {
       createUserWithEmailAndPassword(auth, email, password)
-        .then(() => console.log('Signup success'))
+        .then(() => {
+          console.log('Signup success');
+          history.push('/'); // Redirect to the desired page after signup
+        })
         .catch((err) => alert("Login error: " + err.message));
     }
   };
-  
+
   return (
-    <View style={styles.container}>
-      <img src={backImage} style={styles.backImage} alt="Background" /> {/* Use <img> for images */}
-      <div style={styles.whiteSheet} />
-      <SafeAreaView style={styles.form}>
-        <Text style={styles.title}>Sign Up</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter email"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          textContentType="emailAddress"
-          autoFocus={true}
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Enter password"
-          autoCapitalize="none"
-          autoCorrect={false}
-          secureTextEntry={true}
-          textContentType="password"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-        />
-        <TouchableOpacity style={styles.button} onPress={onHandleSignup}>
-          <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}> Sign Up</Text>
-        </TouchableOpacity>
-        <View style={{marginTop: 20, flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
-          <Text style={{color: 'gray', fontWeight: '600', fontSize: 14}}>Don't have an account? </Text>
-          <TouchableOpacity onClick={() => history.push("Login")}>
-            <Text style={{color: '#f57c00', fontWeight: '600', fontSize: 14}}> Log In</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-      <StatusBar barStyle="light-content" />
-    </View>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography variant="h4" component="h1" style={{ color: 'orange', fontWeight: 'bold', paddingBottom: 24 }}>
+          Sign Up
+        </Typography>
+        <Paper elevation={3} style={{ padding: 20, width: '100%' }}>
+          <form>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Enter email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Enter password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              style={{ backgroundColor: '#f57c00', color: '#fff', fontWeight: 'bold' }}
+              onClick={onHandleSignup}
+            >
+              Sign Up
+            </Button>
+            <Grid container justify="center" style={{ marginTop: 20 }}>
+              <Grid item>
+                <Typography variant="body2" style={{ color: 'gray', fontWeight: '600', fontSize: 14 }}>
+                  Don't have an account? <Link href="/login" style={{ color: '#f57c00', fontWeight: '600', fontSize: 14 }}>Log In</Link>
+                </Typography>
+              </Grid>
+            </Grid>
+          </form>
+        </Paper>
+      </div>
+      <CssBaseline />
+      <img src={backImage} alt="Background" style={{ width: '100%', height: 340, position: 'absolute', top: 0, objectFit: 'cover' }} />
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: "orange",
-    alignSelf: "center",
-    paddingBottom: 24,
-  },
-  input: {
-    backgroundColor: "#F6F7FB",
-    height: 58,
-    marginBottom: 20,
-    fontSize: 16,
-    borderRadius: 10,
-    padding: 12,
-  },
-  backImage: {
-    width: "100%",
-    height: 340,
-    position: "absolute",
-    top: 0,
-    objectFit: 'cover', // Use objectFit for image resizing
-  },
-  whiteSheet: {
-    width: '100%',
-    height: '75%',
-    position: "absolute",
-    bottom: 0,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 60,
-  },
-  form: {
-    flex: 1,
-    justifyContent: 'center',
-    margin: 'auto', // Use margin:auto for horizontal centering
-    maxWidth: 400, // Adjust the width as needed
-    width: '100%',
-    padding: 30,
-  },
-  button: {
-    backgroundColor: '#f57c00',
-    height: 58,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-});
