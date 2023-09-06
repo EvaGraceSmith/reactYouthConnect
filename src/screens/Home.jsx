@@ -1,28 +1,29 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { ThemeContext, UserContext } from '../App'; // Adjust import paths based on your project structure
-import { Button, VStack } from 'native-base'; // Check import compatibility
+import Button from '@mui/material/Button'; 
+import Box from '@mui/material/Box';
 import { styles } from '../utils/styles'; // Check import compatibility
 import SignUpModal from '../components/SignUpModal';
 import CreateRoomModal from '../components/CreateRoomModal';
 import ThemedBox from '../components/ThemedBox';
 import ThemedText from '../components/ThemedText';
-import { View, Image } from 'react-native'; // Adjust imports for web
 import ThemedBackground from '../components/ThemedBackground';
 import LoginModal from '../components/LoginModal';
 import RoomHB from '../components/RoomHB';
 import ApproveUsersList from '../components/ApproveUsersList';
 import LogoutButton from '../components/LogoutButton';
+import { MenuItem } from '@mui/material';
 
 export default function HomeScreen() {
   const { toggleTheme, themeButtonStyle, colorScheme } = useContext(ThemeContext);
-  const { user, room } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const imageUrl = colorScheme === 'light' ? 'https://github.com/EvaGraceSmith/chat/blob/fc760237fb4cfbcb4412634cc621c9ba22e1aecc/assets/TransparentLogo.png?raw=true' : 'https://github.com/EvaGraceSmith/chat/blob/main/assets/TransparentLogoDark.png?raw=true';
 
   return (
     <ThemedBox container={true} testID='HOME'>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: -40 }}>
-        <Image src={imageUrl} style={{ width: 400, height: 400 }} alt='Youth connect logo' testID='YCLOGO' />
-      </View>
+      <Box style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: -40 }}>
+        <img src={imageUrl} style={{ width: 400, height: 400 }} alt='Youth connect logo' testID='YCLOGO' />
+      </Box>
 
       <ThemedBackground style={{ marginTop: -40 }}>
         {/* Commented out due to unsupported ThemedText */}
@@ -41,7 +42,7 @@ export default function HomeScreen() {
           </>
         )}
 
-        <VStack space={4} alignItems='center'>
+        <Box display="flex" flexDirection="column">
           {!user?.username ? (
             <>
               <LoginModal />
@@ -62,7 +63,7 @@ export default function HomeScreen() {
           >
             Change Theme
           </Button>
-        </VStack>
+        </Box>
       </ThemedBackground>
     </ThemedBox>
   );

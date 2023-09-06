@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { View, Button, Image } from 'react-native'; // Adjust imports for web
-import { UserContext } from '../App'; // Adjust import path based on your project structure
-import socket from '../utils/socket'; // Check socket import compatibility
-import { Box, Input } from 'native-base'; // Check import compatibility
+import { useContext } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { UserContext } from '../App'; // Adjust import path over to App.jsx when ready
+
+
+
 
 const CameraScreen = () => {
   const testimage = 'https://i.imgur.com/2nCt3Sbl.jpg';
@@ -18,8 +20,8 @@ const CameraScreen = () => {
   };
 
   return (
-    <View>
-      <View>
+    <Box>
+      <Box>
         <Button
           onClick={handleCameraImage} // Change onPress to onClick for web
           style={{ color: 'orange' }}
@@ -29,12 +31,12 @@ const CameraScreen = () => {
         <Button onClick={handlePickImage} style={{ color: 'blue' }}>
           Select Image
         </Button>
-        <Image
+        <img
           src={pickedImagePath ? pickedImagePath : testimage} // Adjust src attribute
           style={{ width: 200, height: 200 }}
         />
-      </View>
-    </View>
+      </Box>
+    </Box>
   );
 };
 
