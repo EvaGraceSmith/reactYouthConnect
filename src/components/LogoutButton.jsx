@@ -1,18 +1,19 @@
-import React, { useContext } from 'react';
-import { Button } from 'native-base';
-import { ThemeContext, UserContext } from '../App';
+import { useContext } from 'react';
+import { Button } from '@mui/material';
+import { UserContext, ThemeContext } from '../App';
 
 export default function LogoutButton() {
   const { themeButtonStyle } = useContext(ThemeContext);
-  const { user, room, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const handleLogout = () => setUser(null);
 
   return (
     <Button
       style={themeButtonStyle}
-      mt={10}
-      size='sm'
+      mt={2}
+      variant="contained"
+      size="small"
       onClick={handleLogout}
     >
       Log Out

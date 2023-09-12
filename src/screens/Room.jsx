@@ -9,8 +9,6 @@ import {
   ScrollView,
   Icon,
 } from '@mui/material';
-import * as ImagePicker from 'react-native-image-picker';
-import { Platform, View } from 'react-native';
 import RoomHB from '../components/RoomHB';
 import ThemedBox from '../components/ThemedBox';
 import { colors } from '../utils/styles';
