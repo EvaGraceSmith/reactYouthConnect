@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { createRoom } from '../utils/APIFunctions';
 import { UserContext, ThemeContext } from '../App';
-import { fetchRooms } from '../App';
+import { getRooms } from '../App';
 
 export default function CreateRoomModal({ visible, onClose }) {
   const [showModal, setShowModal] = useState(false);
